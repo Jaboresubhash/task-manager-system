@@ -15,8 +15,7 @@ const fetchTasks = async () => {
 
     console.log("FULL RESPONSE:", response);
 
-    // 👇 SAFE EXTRACTION
-    const data = response?.data ?? [];
+    const data = response ?? [];
 
     setTasks(Array.isArray(data) ? data : []);
   } catch (error) {
@@ -78,6 +77,9 @@ const toggleStatus = async (task: any) => {
           ← Back to Home
         </Link>
       </div>
+      <div className="bg-red-500 text-white p-4 text-xl">
+  Tailwind Working
+</div>
 
  <h1 className="text-xl font-bold mb-4">Tasks</h1>
 

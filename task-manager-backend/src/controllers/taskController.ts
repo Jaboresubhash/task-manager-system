@@ -30,3 +30,44 @@ export const getTasks = async (req: any, res: Response) => {
 
   res.json(tasks);
 };
+
+export const updateTask = async (req: any, res: Response) => {
+  try {
+    const { id } = req.params;
+    const { title, status, description } = req.body;
+
+    const task = await prisma.task.update({
+      where: {
+        id: id, // UUID string
+      },
+      data: {
+        ...(title && { title }),
+        ...(status && { status }),
+        ...(description && { description }),
+      },
+    });
+
+    res.json(task);
+  } catch (error) {
+    console.error("Update error:", error);
+    res.status(500).json({ message: "Failed to update task" });
+  }
+};
+
+export const deleteTask = async (req: any, res: Response) => {
+  try {
+    const { id } = req.params;
+
+    await prisma.task.delete({
+      where: {
+        id: id,
+      },
+    });
+
+    res.json({ message: "Task deleted successfully" });
+  } catch (error) {
+    console.error("Delete error:", error);
+    res.status(500).json({ message: "Failed to delete task" });
+  }
+};
+
